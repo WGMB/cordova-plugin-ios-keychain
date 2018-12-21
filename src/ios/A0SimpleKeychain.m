@@ -81,7 +81,11 @@
         if(err != nil) {
             *err = [NSError errorWithDomain:A0ErrorDomain code:status userInfo:@{NSLocalizedDescriptionKey : [self stringForSecStatus:status]}];
         }
-        return nil;
+        
+        NSDictionary * postDictionary = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[self stringForSecStatus:status], nil]
+                                                                    forKeys:[NSArray arrayWithObjects:@"error", nil]];
+        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:postDictionary options:NSJSONWritingPrettyPrinted error:nil];
+        return jsonData;
     }
 
     NSData *dataFound = [NSData dataWithData:(__bridge NSData *)data];
